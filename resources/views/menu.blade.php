@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class='container'>
-
-</div>
+    <div class='container center-align'>
+        <span style='font-size: 3em;'>Menu</span
+    </div>
 @endsection

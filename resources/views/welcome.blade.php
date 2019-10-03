@@ -20,10 +20,9 @@
     </div>
 
     <div class="carousel carousel-slider hide-on-large-only" style='margin:0;'>
-        <a class='carousel-item'><img src='/photos/foto-1.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/foto-2.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/foto-3.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/foto-4.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/foto-5.jpg' style='height:100%;'/></a>
+        <a class='carousel-item'><img src='/photos/mob-1.jpg' style='height:100%;'/></a>
+        <a class='carousel-item'><img src='/photos/mob-2.jpg' style='height:100%;'/></a>
+        <a class='carousel-item'><img src='/photos/mob-3.jpg' style='height:100%;'/></a>
+        <a class='carousel-item'><img src='/photos/mob-4.jpg' style='height:100%;'/></a>
     </div>
 @endsection
