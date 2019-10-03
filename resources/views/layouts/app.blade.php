@@ -15,6 +15,7 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poiret+One&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet" type='text/html'>
@@ -130,7 +131,7 @@
                     <!-- sidenav -->
                     <ul class='sidenav center-align' id='mobile-demo'>
                         @guest
-                            <li><a href='manu'>Menu</a></li>
+                            <li><a href='menu'>Menu</a></li>
                             <li><a href='onas'>O Nas</a></li>
                             <li><a href='kontakt'>Kontakt</a></li>
                             <li><a href='rezerwacja'>Zarezerwuj stolik</a></li>
