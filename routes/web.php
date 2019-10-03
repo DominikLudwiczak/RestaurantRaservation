@@ -36,7 +36,3 @@ Route::get('/onas', function(){
 Route::get('/menu', function(){
     return view('menu');
 });
-
-Route::get('/test', function(){
-
-});
