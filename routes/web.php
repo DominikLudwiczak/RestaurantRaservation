@@ -21,9 +21,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/FAQ', function(){
-    return view('faq');
-});
+Route::get('/FAQ', 'kontroler@faq');
 
 Route::get('/kontakt', function(){
     return view('kontakt');
@@ -33,6 +31,4 @@ Route::get('/onas', function(){
     return view('onas');
 });
 
-Route::get('/menu', function(){
-    return view('menu');
-});
+Route::get('/menu/{kat}', 'kontroler@menu');
