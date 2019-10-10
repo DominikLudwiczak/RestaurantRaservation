@@ -2,7 +2,7 @@
 
 use Illuminate\Database\Seeder;
 
-class menu_kat extends Seeder
+class menu_seeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,8 +11,6 @@ class menu_kat extends Seeder
      */
     public function run()
     {
-        DB::table('manu_kats')->insert([
-            'kategoria' => 'Przystawki'
-        ]);
+        
     }
 }

@@ -32,3 +32,5 @@ Route::get('/onas', function(){
 });
 
 Route::get('/menu/{kat}', 'kontroler@menu');
+
+Route::get('create', 'kontroler@rel');

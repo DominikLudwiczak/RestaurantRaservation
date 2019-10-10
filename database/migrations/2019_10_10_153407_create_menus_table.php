@@ -15,10 +15,16 @@ class CreateMenusTable extends Migration
     {
         Schema::create('menus', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->text('menu_kat');
+            $table->bigInteger('menu_kat_id')->unsigned();
             $table->text('danie');
             $table->text('cena');
             $table->timestamps();
+        });
+
+        Schema::table('menus', function (Blueprint $table){
+            $table->foreign('menu_kat_id')
+                ->references('id')
+                ->on('manu_kats');
         });
     }
 
