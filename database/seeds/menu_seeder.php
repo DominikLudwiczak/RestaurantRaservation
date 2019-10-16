@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\manu_kat;
+use App\menu;
 
 class menu_seeder extends Seeder
 {
@@ -11,6 +13,8 @@ class menu_seeder extends Seeder
      */
     public function run()
     {
-        
+        $kat=manu_kat::findOrFail(1);
+
+        $kat->kat()->save(new menu(['danie'=>'Śledź Matis / Pomidor / Cebula / Oliwa Paprykowa', 'cena'=>32]));
     }
 }

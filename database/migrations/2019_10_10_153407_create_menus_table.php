@@ -17,7 +17,7 @@ class CreateMenusTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('menu_kat_id')->unsigned();
             $table->text('danie');
-            $table->text('cena');
+            $table->integer('cena');
             $table->timestamps();
         });
 
