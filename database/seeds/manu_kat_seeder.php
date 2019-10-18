@@ -16,7 +16,7 @@ class manu_kat_seeder extends Seeder
         $kat->save();
 
         $kat = new \App\manu_kat();
-        $kat->kategoria = 'Zapy';
+        $kat->kategoria = 'Zupy';
         $kat->save();
 
         $kat = new \App\manu_kat();

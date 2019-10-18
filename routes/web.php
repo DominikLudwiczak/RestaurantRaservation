@@ -1,4 +1,5 @@
 <?php
+use App\manu_kat;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,9 @@ Route::get('/onas', function(){
     return view('onas');
 });
 
-Route::get('/menu/{kat}', 'kontroler@menu');
+Route::get('/menu', function(){
+    $kat=manu_kat::all()->first();
+    return redirect("menu/$kat->kategoria");
+});
 
-Route::get('create', 'kontroler@rel');
+Route::get('/menu/{kat}', 'kontroler@menu');

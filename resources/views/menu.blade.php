@@ -6,13 +6,13 @@
         <nav class="nav-extended" style="font-family: 'Poiret One', cursive; background-color:#8A6F63;">
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">
-                    <li class="tab"><a href="menu/#przystawki">Przystawki</a></li>
-                    <li class="tab"><a class="active" href="menu/#zupy">Zupy</a></li>
-                    <li class="tab"><a href="menu/#sałaty">Sałaty</a></li>
-                    <li class="tab"><a href="menu/#przystawki">Dania Wegetariańskie</a></li>
-                    <li class="tab"><a href="menu/#zupy">Dania Główne</a></li>
-                    <li class="tab"><a href="menu/#sałaty">Desery</a></li>
-                    <li class="tab"><a href="menu/#sałaty">Dla Dzieci</a></li>
+                    @foreach($kat as $row)
+                        @if(\Request::is("menu/$row->kategoria"))
+                            <?php echo "<li class='tab'><a class='active' href='$row->kategoria'>$row->kategoria</a></li>";?>
+                        @else
+                            <?php echo "<li class='tab'><a href='$row->kategoria'>$row->kategoria</a></li>";?>
+                        @endif
+                    @endforeach
                     <li class='right'>
                         <form>
                             <div class="input-field">
@@ -25,34 +25,22 @@
                 </ul>
             </div>
         </nav>
-        <span style="font-family: 'Poiret One', cursive; font-size:2.5em;"><i>Przystawki</i></span>
+        <span style="font-family: 'Poiret One', cursive; font-size:2.5em;"><i>{{$kategoria}}</i></span>
         <!-- for desktop -->
         <div class='row hide-on-small-only'>
-            <div class='col m6' style="font-family: 'Poiret One', cursive; font-size:1.2em;">
+            <div class='col m6' style="font-family: 'Poiret One', cursive; font-size:1.2em; font-weight:thin;">
                 <table>
                     <thead>
                         <th></th>
                         <th></th>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th>Śledź Matis / Pomidor / Cebua / Oliwa Paprykowa</th>
-                            <th>32</th>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <div class='col m6' style="font-family: 'Poiret One', cursive; font-size:1.2em;">
-                <table>
-                    <thead>
-                        <th></th>
-                        <th></th>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th>Szpinak / Borowiki / Suszone Pomidory / Bursztyn</th>
-                            <th>35</th>
-                        </tr>
+                        @foreach($menu as $row)
+                            <tr>
+                                <th>{{$row->danie}}</th>
+                                <th>{{$row->cena}}</th>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -65,14 +53,12 @@
                     <th></th>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>Szpinak / Borowiki / Suszone Pomidory / Bursztyn</th>
-                        <th>35</th>
-                    </tr>
-                    <tr>
-                        <th>Śledź Matis / Pomidor / Cebua / Oliwa Paprykowa</th>
-                        <th>32</th>
-                    </tr>
+                    @foreach($menu as $row)
+                        <tr>
+                            <th>{{$row->danie}}</th>
+                            <th>{{$row->cena}}</th>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>

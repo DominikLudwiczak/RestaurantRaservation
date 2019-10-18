@@ -15,15 +15,11 @@ class kontroler extends Controller
         return view('faq')->with('result', $result);
     }
 
-    public function menu()
+    public function menu($kategoria)
     {
-         
-    }
-
-    public function rel()
-    {
-        $kat=manu_kat::findOrFail(1);
-
-        $kat->kat()->save(new menu(['danie'=>'Śledź Matis / Pomidor / Cebula / Oliwa Paprykowa', 'cena'=>32]));
+        $kat=manu_kat::all();
+        $kat_id=manu_kat::where('kategoria', $kategoria)->first();
+        $menu=menu::where('menu_kat_id', $kat_id->id)->get();
+        return view('menu')->with('kat', $kat)->with('kategoria', $kategoria)->with('menu', $menu);
     }
 }
