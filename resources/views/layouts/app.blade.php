@@ -22,7 +22,7 @@
 
     <!-- Materlize -->
     <!-- Compiled and minified CSS -->
-    <link type='text/css' rel='stylesheet' href='/restauracja/public/css/materialize.min.css' media='screen,projection'/>
+    <link type='text/css' rel='stylesheet' href='/public/css/materialize.min.css' media='screen,projection'/>
 
     <!-- icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -134,12 +134,12 @@
                             @if(\Request::is('menu/*'))
                                 <li><a href="">Menu</a></li>
                             @else
-                                <li><a href="/restauracja/menu">Menu</a></li>
+                                <li><a href="{{ route('menu') }}">Menu</a></li>
                             @endif
-                            <li><a href='/restauracja/onas'>O Nas</a></li>
-                            <li><a href='/restauracja/kontakt'>Kontakt</a></li>
-                            <li><a href='/restauracja/rezerwacja'>Zarezerwuj stolik</a></li>
-                            <li><a href='/restauracja/FAQ'>FAQ</a></li>
+                            <li><a href="{{ route('onas') }}">O Nas</a></li>
+                            <li><a href="{{ route('kontakt') }}">Kontakt</a></li>
+                            <li><a href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
+                            <li><a href="{{ route('faq') }}">FAQ</a></li>
                             <li><div class='divider'></div></li>
                             <li><a href="{{ route('login') }}">Zaloguj się</a></li>
                             @if (Route::has('register'))
@@ -168,6 +168,7 @@
 
     <!-- content -->
     <main class='py-4'>
+        @include('includes.messages')
         @yield('content')
     </main>
 
@@ -186,17 +187,17 @@
                             @if(\Request::is('menu/*'))
                                 <li><a class="grey-text text-lighten-3" href="">Menu</a></li>
                             @else
-                                <li><a class="grey-text text-lighten-3" href="/restauracja/menu">Menu</a></li>
+                                <li><a class="grey-text text-lighten-3" href="{{ route('menu') }}">Menu</a></li>
                             @endif
-                            <li><a class="grey-text text-lighten-3" href="/restauracja/onas">O Nas</a></li>
-                            <li><a class="grey-text text-lighten-3" href="/restauracja/rezerwacja">Zarezerwuj stolik</a></li>
-                            <li><a class="grey-text text-lighten-3" href="/restauracja/FAQ">FAQ</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('onas') }}">O Nas</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
+                            <li><a class="grey-text text-lighten-3" href="{{ route('faq') }}">FAQ</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class='col s12 m4 center-align'>
                     <div class='col s12'>
-                        <h4 class="white-text"><a href='/restauracja/kontakt' style='color:white;'>Kontakt</a></h4>
+                        <h4 class="white-text"><a href="{{ route('kontakt') }}" style='color:white;'>Kontakt</a></h4>
                         <a href='tel:+48123456789' style='color:white;' class='flow-text'>123 465 789</a><br/>
                         <span class='flow-text' style='font-size:1em;'>Poznań 61-701 ul.Fredry 13</span>
                     </div>
@@ -205,7 +206,8 @@
             <hr>
             <div class='card center-align' style='background-color:#393838;'>
                 <span class='card-title' style='font-size:1.5em;'>Masz pytania? Napisz do nas!</span>
-                <form method='post' action='#'>
+                <form method='post' action="{{ route('message') }}">
+                    @csrf
                     <div class='card-content'>
                         <div class='row' style='margin-bottom:0;'>
                             <div class='col m3'></div>
@@ -220,7 +222,7 @@
                             <div class='col m3'></div>
                             <div class='input-field col s12 m6'>
                                 <i class="material-icons prefix" style="color: #D8977B;">mode_edit</i>
-                                <textarea id='textarea1' name='mess' class='materialize-textarea' data-length="255" style='color:white;'></textarea>
+                                <textarea id='textarea1' name='wiadomosc' class='materialize-textarea' data-length="255" style='color:white;'></textarea>
                                 <label for='textarea1'>Wiadomość</label>
                             </div>
                         </div>
@@ -241,6 +243,7 @@
                 <a href='#!'><i class='small material-icons white-text'>stars</i></a>
                 <a href='#!'><i class='small material-icons white-text'>https</i></a>
                 <a href='#!'><i class='small material-icons white-text'>account_circle</i></a>
+                <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
             </div>
             © 2019 Copyright Text
         </div>

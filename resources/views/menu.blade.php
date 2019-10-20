@@ -13,15 +13,6 @@
                             <?php echo "<li class='tab'><a href='$row->kategoria'>$row->kategoria</a></li>";?>
                         @endif
                     @endforeach
-                    <li class='right'>
-                        <form>
-                            <div class="input-field">
-                                <input id="search" type="search" style='border:none;' required>
-                                <label class="label-icon" for="search"><i class="material-icons">search</i></label>
-                                <i class="material-icons">close</i>
-                            </div>
-                        </form>
-                    </li>
                 </ul>
             </div>
         </nav>
@@ -35,15 +26,43 @@
                         <th></th>
                     </thead>
                     <tbody>
+                        <?php $x=0; $j=0;?>
                         @foreach($menu as $row)
-                            <tr>
-                                <th>{{$row->danie}}</th>
-                                <th>{{$row->cena}}</th>
-                            </tr>
+                            <?php $x++;?>
+                            @if($x<=count($menu)/2 || $x % 2!=0)
+                                <tr>
+                                    <th>{{$row->danie}}</th>
+                                    <th>{{$row->cena}} PLN</th>
+                                </tr>
+                            @else
+                                <?php
+                                    $arr[$j][0]=$row->danie;
+                                    $arr[$j][1]=$row->cena;
+                                    $j++;
+                                ?>
+                            @endif
                         @endforeach
                     </tbody>
                 </table>
             </div>
+            @if(isset($arr))
+                <div class='col m6' style="font-family: 'Poiret One', cursive; font-size:1.2em; font-weight:thin;">
+                    <table>
+                        <thead>
+                            <th></th>
+                            <th></th>
+                        </thead>
+                        <tbody>
+                            @for($i=0; $i <= $j-1; $i++)
+                                <tr>
+                                    <th>{{$arr[$i][0]}}</th>
+                                    <th>{{$arr[$i][1]}} PLN</th>
+                                </tr>
+                            @endfor
+                        </tbody>
+                    </table>
+                </div>
+            @endif
         </div>
         <!-- for mobile -->
         <div class='col s12 hide-on-med-and-up' style="font-family: 'Poiret One', cursive; font-size:1.2em;">

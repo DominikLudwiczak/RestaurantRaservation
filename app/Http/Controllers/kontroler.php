@@ -22,4 +22,9 @@ class kontroler extends Controller
         $menu=menu::where('menu_kat_id', $kat_id->id)->get();
         return view('menu')->with('kat', $kat)->with('kategoria', $kategoria)->with('menu', $menu);
     }
+
+    public function message(Request $data)
+    {
+
+    }
 }

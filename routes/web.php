@@ -22,19 +22,23 @@ Auth::routes(['verify' => true]);
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/FAQ', 'kontroler@faq');
+Route::get('/FAQ', 'kontroler@faq')->name('faq');
 
 Route::get('/kontakt', function(){
     return view('kontakt');
-});
+})->name('kontakt');
 
 Route::get('/onas', function(){
     return view('onas');
-});
+})->name('onas');
 
 Route::get('/menu', function(){
     $kat=manu_kat::all()->first();
     return redirect("menu/$kat->kategoria");
-});
+})->name('menu');
 
 Route::get('/menu/{kat}', 'kontroler@menu');
+
+Route::get('/rezerwacja', function(){})->name('rezerwacja');
+
+Route::post('/message', 'kontroler@message')->middleware('CheckMsg')->name('message');
