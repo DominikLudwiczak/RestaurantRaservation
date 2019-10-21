@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\faq;
 use App\manu_kat;
 use App\menu;
+use App\User;
+use App\messages;
 
 class kontroler extends Controller
 {
@@ -25,6 +27,21 @@ class kontroler extends Controller
 
     public function message(Request $data)
     {
+        $emails=User::where('email', $data->mail)->first()->get();
+        $user_id=null;
+        if($data->mail==$emails->email)
+        {
+            $user_id=$emails->id;
+        }
+        
+        $dane=[
+            'user_ID' => $user_id,
+            'email' => $data->mail,
+            'msg' => $data->msg
+        ];
 
+        messages::create($dane);
+
+        return redirect();
     }
 }

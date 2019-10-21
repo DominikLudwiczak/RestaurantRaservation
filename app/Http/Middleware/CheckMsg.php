@@ -17,7 +17,7 @@ class CheckMsg
     {
 
         $request->validate([
-            'mail' => 'required|email',
+            'mail' => 'email',
             'wiadomosc' => 'required',
         ]);
         return $next($request);
