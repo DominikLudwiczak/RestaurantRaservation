@@ -229,7 +229,7 @@
                         <div class='row'>
                             <div class='col s3'></div>
                             <div class='input-field col s6'>
-                                <button type='submit' class='btn' style='background-color:#b07d68;'>{{ __('Wyślij') }}</button>
+                                <button type='submit' class='btn' name='button' value='<?php url()->current(); ?>' style='background-color:#b07d68;'>{{ __('Wyślij') }}</button>
                             </div>
                         </div>
                     </div>
@@ -257,6 +257,15 @@
             $('.collapsible').collapsible();
             $('textarea#textarea1').characterCounter();
             $('.sidenav').sidenav();
+            $('select').formSelect();
+            $('.datepicker').datepicker();
+            $('.timepicker').timepicker({
+                defaultTime: 'now',
+                twelveHour: false,
+                disable:[
+                    {from: [19,0], to: [8,0]}
+                ]
+            });
             $('.carousel.carousel-slider').carousel({
                 fullWidth: true,
             });

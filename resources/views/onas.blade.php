@@ -2,6 +2,6 @@
 
 @section('content')
     <div class='container center-align'>
-        <span style='font-size:3em;'>O Nas</span>
+        <span style='font-size:2.5em;'>O Nas</span>
     </div>
 @endsection

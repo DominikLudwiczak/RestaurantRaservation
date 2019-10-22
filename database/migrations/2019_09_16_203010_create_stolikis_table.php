@@ -15,6 +15,8 @@ class CreateStolikisTable extends Migration
     {
         Schema::create('stolikis', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->Integer('table_id')->unique();
+            $table->Integer('persons');
             $table->timestamps();
         });
     }

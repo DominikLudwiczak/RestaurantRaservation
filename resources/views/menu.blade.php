@@ -2,7 +2,7 @@
 
 @section('content')
     <div class='container center-align'>
-        <span style='font-size: 3em;'>Menu</span><br/>
+        <span style='font-size: 2.5em;'>Menu</span><br/>
         <nav class="nav-extended" style="font-family: 'Poiret One', cursive; background-color:#8A6F63;">
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">

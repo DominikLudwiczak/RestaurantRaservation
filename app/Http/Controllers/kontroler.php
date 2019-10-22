@@ -27,21 +27,24 @@ class kontroler extends Controller
 
     public function message(Request $data)
     {
-        $emails=User::where('email', $data->mail)->first()->get();
+        $emails=User::where('email', $data->mail)->select('id', 'email')->first();
         $user_id=null;
-        if($data->mail==$emails->email)
+        if(isset($emails))
         {
-            $user_id=$emails->id;
+            if($data->mail==$emails->email)
+            {
+                $user_id=$emails->id;
+            }
         }
         
         $dane=[
             'user_ID' => $user_id,
             'email' => $data->mail,
-            'msg' => $data->msg
+            'msg' => $data->wiadomosc
         ];
 
-        messages::create($dane);
-
-        return redirect();
+        $send = messages::create($dane);
+        $dane=null;
+        return redirect("$data->button");
     }
 }

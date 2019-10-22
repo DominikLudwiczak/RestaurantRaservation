@@ -3,7 +3,7 @@
 @section('content')
     <div class='container'>
         <div class='center-align'>
-            <span style='font-size:3em;'>Kontakt</span>
+            <span style='font-size:2.5em;'>Kontakt</span>
         </div>
         <div class='row'>
             <div class='col s12 m6' style='margin-top:1em;'>
