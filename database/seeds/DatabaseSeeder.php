@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(manu_kat_seeder::class);
         $this->call(menu_seeder::class);
         $this->call(stoliki_seeder::class);
+        $this->call(rezerwacje_seeder::class);
     }
 }

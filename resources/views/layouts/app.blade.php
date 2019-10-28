@@ -97,6 +97,8 @@
                 flex: 1 0 auto;
             }
 
+            .picker__date-display { background-color: #6d4e7a; }
+
     </style>
             
 </head>

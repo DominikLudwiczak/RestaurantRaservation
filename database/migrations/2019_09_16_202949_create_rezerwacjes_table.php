@@ -15,7 +15,20 @@ class CreateRezerwacjesTable extends Migration
     {
         Schema::create('rezerwacjes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->bigInteger('user_ID')->unsigned();
+            $table->bigInteger('table_ID')->unsigned();
+            $table->integer('persons');
             $table->timestamps();
+        });
+
+        Schema::table('rezerwacjes', function (Blueprint $table){
+            $table->foreign('user_ID')
+                ->references('id')
+                ->on('users');
+
+            $table->foreign('table_ID')
+                ->references('id')
+                ->on('stolikis'); 
         });
     }
 
