@@ -15,7 +15,6 @@ class CheckMsg
      */
     public function handle($request, Closure $next)
     {
-
         $request->validate([
             'mail' => 'email',
             'wiadomosc' => 'required',
