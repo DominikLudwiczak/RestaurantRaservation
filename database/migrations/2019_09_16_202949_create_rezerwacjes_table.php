@@ -18,7 +18,8 @@ class CreateRezerwacjesTable extends Migration
             $table->bigInteger('user_ID')->unsigned();
             $table->Integer('table_ID')->unisigned();
             $table->integer('persons');
-            $table->datetime('time');
+            $table->date('date');
+            $table->time('time');
             $table->timestamps();
         });
 

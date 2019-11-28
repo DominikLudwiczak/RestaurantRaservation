@@ -41,4 +41,6 @@ Route::get('/menu/{kat}', 'kontroler@menu');
 
 Route::get('/rezerwacja', 'kontroler@rezerwacja')->name('rezerwacja');
 
+Route::post('/rezerwacja/check', 'zapisy@check')->name('rezerwacja_check');
+
 Route::post('/message', 'kontroler@message')->middleware('CheckMsg')->name('message');

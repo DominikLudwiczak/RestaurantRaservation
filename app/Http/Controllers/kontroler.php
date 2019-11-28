@@ -46,12 +46,13 @@ class kontroler extends Controller
 
         $send = messages::create($dane);
         $dane=null;
-        return redirect("$data->button");
+        return redirect("$data->button")->with('success', 'Wiadomość została wysłana!');
     }
 
     public function rezerwacja()
     {
         $max_persons_count = stoliki::max('persons');
-        return view('rezerwacja')->with('max_persons_count', $max_persons_count);
+        session(['max_persons_count' => $max_persons_count]);
+        return view('rezerwacja');
     }
 }
