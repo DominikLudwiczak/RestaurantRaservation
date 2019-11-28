@@ -16,7 +16,7 @@
                     <label id="label-persons" for='persons' class='valign-wrapper' style="position: absolute; top: 0; display: none;">Ilość osób<i class='material-icons'>people</i></label>
                     <select id='persons'>
                         <option value='' disabled selected>Ilość osób</option>
-                        @for($i=0; $i < 5; $i++)
+                        @for($i=1; $i <= $max_persons_count; $i++)
                             <option value="{{$i}}">{{$i}}</option>
                         @endfor
                     </select>

@@ -39,8 +39,6 @@ Route::get('/menu', function(){
 
 Route::get('/menu/{kat}', 'kontroler@menu');
 
-Route::get('/rezerwacja', function(){
-    return view('rezerwacja');
-})->name('rezerwacja');
+Route::get('/rezerwacja', 'kontroler@rezerwacja')->name('rezerwacja');
 
 Route::post('/message', 'kontroler@message')->middleware('CheckMsg')->name('message');

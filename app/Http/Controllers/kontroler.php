@@ -8,6 +8,7 @@ use App\manu_kat;
 use App\menu;
 use App\User;
 use App\messages;
+use App\stoliki;
 
 class kontroler extends Controller
 {
@@ -46,5 +47,11 @@ class kontroler extends Controller
         $send = messages::create($dane);
         $dane=null;
         return redirect("$data->button");
+    }
+
+    public function rezerwacja()
+    {
+        $max_persons_count = stoliki::max('persons');
+        return view('rezerwacja')->with('max_persons_count', $max_persons_count);
     }
 }

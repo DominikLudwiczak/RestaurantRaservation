@@ -245,7 +245,7 @@
                 <a href='#!'><i class='small material-icons white-text'>stars</i></a>
                 <a href='#!'><i class='small material-icons white-text'>https</i></a>
                 <a href='#!'><i class='small material-icons white-text'>account_circle</i></a>
-                <a class="btn" onclick="M.toast('I am a toast', 4000)">Toast!</a>
+                <a class="btn" onclick="M.toast({html: 'I am a toast'}, 4000)">Toast!</a>
             </div>
             © 2019 Copyright Text
         </div>
