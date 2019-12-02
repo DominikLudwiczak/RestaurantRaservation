@@ -40,7 +40,7 @@
             </form>
     </div>
 
-    <?php $year=date('Y', strtotime(session('date'))); $month=date('m', strtotime(session('date'))); $day=date('d', strtotime(session('date'))); ?>
+    <?php $year=date('Y', strtotime(session('date'))); $month=date('m', strtotime('-1 month',strtotime(session('date')))); $day=date('d', strtotime(session('date'))); ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -53,5 +53,15 @@
             // instance.open();
             instance.setDate(options.dafaultDate);
         });
+
+        const defaultTime = '<?php echo session('time');?>';
+        const myInput = document.getElementById('time');
+        const timeInstance = M.Timepicker.init(myInput, {
+            defaultTime: defaultTime
+        });
+
+        // forces materialize time picker to display default time in input
+        timeInstance._updateTimeFromInput();
+        timeInstance.done();
     </script>
 @endsection
