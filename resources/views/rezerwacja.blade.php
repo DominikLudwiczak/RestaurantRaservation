@@ -38,9 +38,26 @@
                     </div>
                 </div>
             </form>
+            <div class='col s12 '>
+                <h5>Dostępne rezerwacje w wybranym dniu</h5>
+            </div>
     </div>
 
-    <?php $year=date('Y', strtotime(session('date'))); $month=date('m', strtotime('-1 month',strtotime(session('date')))); $day=date('d', strtotime(session('date'))); ?>
+    <?php 
+        if(session('date')==null)
+        {
+            session(['date' => date("Y-m-d")]);
+        }
+        
+        if(session('time')==null)
+        {
+            session(['time' => date("H:i")]);
+        }
+
+        $year=date('Y', strtotime(session('date')));
+        $month=date('m', strtotime('-1 month',strtotime(session('date')))); 
+        $day=date('d', strtotime(session('date'))); 
+    ?>
 
     <script>
         document.addEventListener('DOMContentLoaded', function () {
