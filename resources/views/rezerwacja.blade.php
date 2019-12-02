@@ -39,4 +39,19 @@
                 </div>
             </form>
     </div>
+
+    <?php $year=date('Y', strtotime(session('date'))); $month=date('m', strtotime(session('date'))); $day=date('d', strtotime(session('date'))); ?>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var options = {
+                defaultDate: new Date(<?php echo $year.", ".$month.", ".$day ?>),
+                setDefaultDate: true
+            };
+            var elems = document.querySelector('.datepicker');
+            var instance = M.Datepicker.init(elems, options);
+            // instance.open();
+            instance.setDate(options.dafaultDate);
+        });
+    </script>
 @endsection
