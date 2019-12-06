@@ -38,47 +38,67 @@
                     </div>
                 </div>
             </form>
-            <div class='col s12 '>
-                <h5>Dostępne rezerwacje w wybranym dniu</h5>
-            </div>
+            @if(session('godziny'))
+                <form method='post' action="{{ route('rezerwacja_save') }}">
+                @csrf
+                    <div class='col s12 '>
+                        <h5>Dostępne godziny rezerwacji w wybranym dniu</h5>
+                        @foreach(session('stoliki') as $row)
+                            <div class="card horizontal">
+                                <div class="card-image">
+                                    <img src="photos/stolik-1.jpg">
+                                </div>
+                                <div class="card-stacked">
+                                    <div class="card-action">
+                                        STOLIK {{$row->table_id}}
+                                    </div>
+                                    <div class="card-content">
+                                        @for($i=0; $i < count(session('godziny')); $i++)
+                                            @if(session('godziny')[$i][1]==$row->table_id)
+                                                <button class='btn' style='margin-bottom:1em;' name='save' value="{{session('date')}}; {{session('godziny')[$i][0]}}; {{session('godziny')[$i][1]}}; {{session('persons')}}">{{session('godziny')[$i][0]}}</button>
+                                            @endif
+                                        @endfor
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </form>
+            @endif
     </div>
-
     <?php 
-        if(session('date')==null)
-        {
-            session(['date' => date("Y-m-d")]);
-        }
-        
-        if(session('time')==null)
-        {
-            session(['time' => date("H:i")]);
-        }
-
         $year=date('Y', strtotime(session('date')));
         $month=date('m', strtotime('-1 month',strtotime(session('date')))); 
         $day=date('d', strtotime(session('date'))); 
     ?>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var options = {
-                defaultDate: new Date(<?php echo $year.", ".$month.", ".$day ?>),
-                setDefaultDate: true
-            };
-            var elems = document.querySelector('.datepicker');
-            var instance = M.Datepicker.init(elems, options);
-            // instance.open();
-            instance.setDate(options.dafaultDate);
-        });
+        if(<?php echo session('date')!=null?>)
+        {
+            document.addEventListener('DOMContentLoaded', function () {
+                var options = {
+                    defaultDate: new Date(<?php echo $year.", ".$month.", ".$day ?>),
+                    setDefaultDate: true
+                };
+                var elems = document.querySelector('.datepicker');
+                var instance = M.Datepicker.init(elems, options);
+                // instance.open();
+                instance.setDate(options.dafaultDate);
+            });
+        }
 
-        const defaultTime = '<?php echo session('time');?>';
-        const myInput = document.getElementById('time');
-        const timeInstance = M.Timepicker.init(myInput, {
-            defaultTime: defaultTime
-        });
+        if(<?php echo session('time')!=null?>)
+        {
+            const defaultTime = '<?php echo session('time');?>';
+            const myInput = document.getElementById('time');
+            const timeInstance = M.Timepicker.init(myInput, {
+                twelveHour: false,
+                defaultTime: defaultTime
+            });
 
-        // forces materialize time picker to display default time in input
-        timeInstance._updateTimeFromInput();
-        timeInstance.done();
+            // forces materialize time picker to display default time in input
+            timeInstance._updateTimeFromInput();
+            timeInstance.done();
+        }
     </script>
 @endsection
