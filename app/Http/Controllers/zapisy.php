@@ -15,9 +15,9 @@ class zapisy extends Controller
     {
         $date=date("Y-m-d", strtotime($data->date));
 
-        $rezerwacje_db=DB::select("select time, table_id from rezerwacjes WHERE date = ? AND table_id IN (SELECT table_id FROM stolikis WHERE persons >= ? AND persons <= ?) ORDER BY table_id",[$date, $data->persons, $data->persons+2]);
+        $rezerwacje_db=DB::select("select time, table_id from rezerwacjes WHERE date = ? AND table_id IN (SELECT table_id FROM stolikis WHERE persons >= ? AND persons <= ?) ORDER BY time",[$date, $data->persons, $data->persons+2]);
 
-        $stoliki=stoliki::all();
+        $stoliki=stoliki::where('persons', '>=', $data->persons)->where('persons', '<=', $data->persons+2)->get();
 
         $p=0;
         foreach($rezerwacje_db as $row)
@@ -28,7 +28,7 @@ class zapisy extends Controller
         }
 
         $godz_otw = godz_otwarcia::where('day', date('D', strtotime($data->date)))->select('start', 'end')->get();
-        
+
         $start=date("H:i", strtotime('-30 minutes', strtotime($data->time)));
         foreach($godz_otw as $otw)
         {
@@ -40,6 +40,7 @@ class zapisy extends Controller
         }
         $rozp=$start;
 
+        $middle=array();
         $godziny=array();
         $j=0;
         foreach($stoliki as $wiersz)
@@ -55,8 +56,8 @@ class zapisy extends Controller
                         while($start < $rez)
                         {
                             $start=date("H:i", strtotime("+30 minutes", strtotime($start)));
-                            $godziny[$j][0]=$start;
-                            $godziny[$j][1]=$wiersz->table_id;
+                            $middle[$j][0]=$start;
+                            $middle[$j][1]=$wiersz->table_id;
                             $j++;
                         }
                         $start=date("H:i", strtotime("+3 hour 30 minutes", strtotime($rez)));
@@ -67,11 +68,38 @@ class zapisy extends Controller
             while($start < $end)
             {
                 $start=date("H:i", strtotime("+30 minutes", strtotime($start)));
-                $godziny[$j][0]=$start;
-                $godziny[$j][1]=$wiersz->table_id;
+                $middle[$j][0]=$start;
+                $middle[$j][1]=$wiersz->table_id;
                 $j++;
             }
         }
+
+        $start=$rozp;
+        $p=0;
+        $z=0;
+        while($start < $end)
+        {
+            $start=date("H:i", strtotime("+30 minutes", strtotime($start)));
+            for($i=0; $i < $j; $i++)
+            {
+                if($middle[$i][0]==$start)
+                {
+                    $tables_rand[$z]=$middle[$i][1];
+                    $z++;
+                }
+            }
+
+            if(count($tables_rand) > 0)
+            {
+                $godziny[$p][0]=$start;
+                $rand=array_rand($tables_rand, 1);
+                $godziny[$p][1]=$tables_rand[$rand];
+                $p++;
+            }
+            $tables_rand=null;
+            $z=0;
+        }
+
         session(['godziny' => $godziny]);
         session(['date' => $data->date]);
         session(['time' => $data->time]);
