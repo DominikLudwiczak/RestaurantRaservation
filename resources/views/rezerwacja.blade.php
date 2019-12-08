@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class='container center-align' style="height:90vh;">
+    <div class='container center-align' style="min-height:90vh;">
         <span style='font-size:2.5em; bottom:1rem;'>Rezerwacja stolika</span>
             <form method='post' action="{{ route('rezerwacja_check') }}">
                 @csrf
@@ -39,31 +39,28 @@
                 </div>
             </form>
             @if(session('godziny'))
-                <form method='post' action="{{ route('rezerwacja_save') }}">
-                @csrf
-                    <div class='col s12 '>
-                        <h5>Dostępne godziny rezerwacji w wybranym dniu</h5>
-                        @foreach(session('stoliki') as $row)
+                @if(session('godziny')[0]=="brak")
+                    <h5>Niestety w wybranym terminie nie znaleziono wolnych stolików</h5>
+                @else
+                    <form method='post' action="{{ route('rezerwacja_save') }}">
+                    @csrf
+                        <div class='col s12 '>
+                            <h5>Dostępne godziny rezerwacji w wybranym dniu</h5>
                             <div class="card horizontal">
                                 <div class="card-image">
                                     <img src="photos/stolik-1.jpg">
                                 </div>
                                 <div class="card-stacked">
-                                    <div class="card-action">
-                                        STOLIK {{$row->table_id}}
-                                    </div>
                                     <div class="card-content">
                                         @for($i=0; $i < count(session('godziny')); $i++)
-                                            @if(session('godziny')[$i][1]==$row->table_id)
-                                                <button class='btn' style='margin-bottom:1em;' name='save' value="{{session('date')}}; {{session('godziny')[$i][0]}}; {{session('godziny')[$i][1]}}; {{session('persons')}}">{{session('godziny')[$i][0]}}</button>
-                                            @endif
+                                            <button class='btn' style='margin-bottom:1em;' name='save' value="{{session('date')}}; {{session('godziny')[$i][0]}}; {{session('godziny')[$i][1]}}; {{session('persons')}}">{{session('godziny')[$i][0]}}</button>
                                         @endfor
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
-                    </div>
-                </form>
+                        </div>
+                    </form>
+                @endif
             @endif
     </div>
     <?php 

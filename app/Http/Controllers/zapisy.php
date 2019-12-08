@@ -11,6 +11,11 @@ use Auth;
 
 class zapisy extends Controller
 {
+    private function godziny($date, $time, $persons)
+    {
+
+    }
+
     public function check(Request $data)
     {
         $date=date("Y-m-d", strtotime($data->date));
@@ -42,6 +47,7 @@ class zapisy extends Controller
 
         $middle=array();
         $godziny=array();
+        $tables_rand=array();
         $j=0;
         foreach($stoliki as $wiersz)
         {
@@ -96,15 +102,19 @@ class zapisy extends Controller
                 $godziny[$p][1]=$tables_rand[$rand];
                 $p++;
             }
-            $tables_rand=null;
+            $tables_rand=array();
             $z=0;
+        }
+
+        if($godziny==null)
+        {
+            $godziny[0]='brak';
         }
 
         session(['godziny' => $godziny]);
         session(['date' => $data->date]);
         session(['time' => $data->time]);
         session(['persons' => $data->persons]);
-        session(['stoliki' => $stoliki]);
         return redirect(route('rezerwacja'));
     }
 
@@ -127,6 +137,11 @@ class zapisy extends Controller
             ];
             $save=rezerwacje::create($dane);
             $dane=null;
+            unset(session('godziny')[0]);
+            unset(session('godziny')[1]);
+            unset(session('date')[0]);
+            unset(session('time')[0]);
+            unset(session('persons')[0]);
             return redirect(route('rezerwacja'))->with('success', 'zarezerwowano stolik!');
         }
     }

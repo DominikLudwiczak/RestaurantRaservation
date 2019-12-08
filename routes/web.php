@@ -43,6 +43,10 @@ Route::get('/rezerwacja', 'kontroler@rezerwacja')->name('rezerwacja');
 
 Route::post('/rezerwacja/check', 'zapisy@check')->middleware('CheckRezerwacja')->name('rezerwacja_check');
 
+Route::post('/rezerwacja/confirm', function(){
+    return view('confirm');
+})->name('rezerwacja_confirm');
+
 Route::post('/rezerwacja/save', 'zapisy@save')->name('rezerwacja_save');
 
 Route::post('/message', 'kontroler@message')->middleware('CheckMsg')->name('message');
