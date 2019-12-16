@@ -12,6 +12,34 @@
                             <div class='col m3'></div>
                             <div class='input-field col s12 m6'>
                                 <i class='material-icons prefix' style="color: #b07c68;">account_circle</i>
+                                <input id='first_name' type='text' name='first_name' class="validate form-control @error('first_name') is-invalid @enderror" value="{{ old('first_name') }}" required autocomplete="first_name" autofocus>
+                                <label for='first_name'>Imie</label>
+                                <span class='helper-text' data-error='Wprowadź imie' data-success=''></span>
+                                @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong style='color:#FF003C;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col m3'></div>
+                            <div class='input-field col s12 m6'>
+                                <i class='material-icons prefix' style="color: #b07c68;">account_circle</i>
+                                <input id='last_name' type='text' name='last_name' class="validate form-control @error('last_name') is-invalid @enderror" value="{{ old('last_name') }}" required autocomplete="last_name" autofocus>
+                                <label for='last_name'>Nazwisko</label>
+                                <span class='helper-text' data-error='Wprowadź nazwisko' data-success=''></span>
+                                @error('first_name')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong style='color:#FF003C;'>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class='row'>
+                            <div class='col m3'></div>
+                            <div class='input-field col s12 m6'>
+                                <i class='material-icons prefix' style="color: #b07c68;">account_circle</i>
                                 <input id='name' type='text' name='name' class="validate form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" required autocomplete="name" autofocus>
                                 <label for='name'>Login</label>
                                 <span class='helper-text' data-error='Podaj login' data-success=''></span>

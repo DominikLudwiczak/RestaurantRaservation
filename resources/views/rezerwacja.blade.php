@@ -34,33 +34,37 @@
                         </script>
                     </div>
                     <div class='input-field col s12'>
-                            <button type='submit' class='btn'>Znajdź stoliki</button>
+                            <button type='submit' class='btn' style='background-color:#A8735C;'>Znajdź stoliki</button>
                     </div>
                 </div>
             </form>
             @if(session('godziny'))
-                @if(session('godziny')[0]=="brak")
-                    <h5>Niestety w wybranym terminie nie znaleziono wolnych stolików</h5>
-                @else
-                    <form method='post' action="{{ route('rezerwacja_save') }}">
-                    @csrf
-                        <div class='col s12 '>
+                <form method='post' action="{{ route('rezerwacja_confirm') }}">
+                @csrf
+                    <div class='col s12 '>
+                        @if(session('godziny')[count(session('godziny'))-1][0]=="brak")
+                            <h5>Niestety w wybranym terminie nie znaleziono wolnych stolików,<br/>
+                                oto nasze propozycje na następny dzień
+                            </h5>
+                        @else
                             <h5>Dostępne godziny rezerwacji w wybranym dniu</h5>
-                            <div class="card horizontal">
-                                <div class="card-image">
-                                    <img src="photos/stolik-1.jpg">
-                                </div>
-                                <div class="card-stacked">
-                                    <div class="card-content">
-                                        @for($i=0; $i < count(session('godziny')); $i++)
-                                            <button class='btn' style='margin-bottom:1em;' name='save' value="{{session('date')}}; {{session('godziny')[$i][0]}}; {{session('godziny')[$i][1]}}; {{session('persons')}}">{{session('godziny')[$i][0]}}</button>
-                                        @endfor
-                                    </div>
+                        @endif
+                        <div class="card horizontal">
+                            <div class="card-image">
+                                <img src="photos/stolik-1.jpg">
+                            </div>
+                            <div class="card-stacked">
+                                <div class="card-content">
+                                    @for($i=0; $i < count(session('godziny')); $i++)
+                                        @if(session('godziny')[$i][0]!="brak")
+                                            <button class='btn' style='margin-bottom:1em; background-color:#BD856F;' name='save' value="{{session('date')}}; {{session('godziny')[$i][0]}}; {{session('godziny')[$i][1]}}; {{session('persons')}}">{{session('godziny')[$i][0]}}</button>
+                                        @endif
+                                    @endfor
                                 </div>
                             </div>
                         </div>
-                    </form>
-                @endif
+                    </div>
+                </form>
             @endif
     </div>
     <?php 

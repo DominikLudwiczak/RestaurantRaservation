@@ -11,18 +11,14 @@ use Auth;
 
 class zapisy extends Controller
 {
+    //funkcja zwracająca dostępne godziny
     private function godziny($date, $time, $persons)
     {
+        $date=date("Y-m-d", strtotime($date));
 
-    }
+        $rezerwacje_db=DB::select("select time, table_id from rezerwacjes WHERE date = ? AND table_id IN (SELECT table_id FROM stolikis WHERE persons >= ? AND persons <= ?) ORDER BY time",[$date, $persons, $persons+2]);
 
-    public function check(Request $data)
-    {
-        $date=date("Y-m-d", strtotime($data->date));
-
-        $rezerwacje_db=DB::select("select time, table_id from rezerwacjes WHERE date = ? AND table_id IN (SELECT table_id FROM stolikis WHERE persons >= ? AND persons <= ?) ORDER BY time",[$date, $data->persons, $data->persons+2]);
-
-        $stoliki=stoliki::where('persons', '>=', $data->persons)->where('persons', '<=', $data->persons+2)->get();
+        $stoliki=stoliki::where('persons', '>=', $persons)->where('persons', '<=', $persons+2)->get();
 
         $p=0;
         foreach($rezerwacje_db as $row)
@@ -32,15 +28,21 @@ class zapisy extends Controller
             $p++;
         }
 
-        $godz_otw = godz_otwarcia::where('day', date('D', strtotime($data->date)))->select('start', 'end')->get();
+        $godz_otw = godz_otwarcia::where('day', date('D', strtotime($date)))->select('start', 'end')->get();
 
-        $start=date("H:i", strtotime('-30 minutes', strtotime($data->time)));
+        $start=null;
+        if($time!=null)
+        {
+            $start=date("H:i", strtotime('-30 minutes', strtotime($time)));
+        }
+        
         foreach($godz_otw as $otw)
         {
             $end=date("H:i", strtotime("-2 hours", strtotime($otw->end)));
-            if($start < $otw->start)
+            if($start < $otw->start || $time==null)
             {
                 $start=date("H:i", strtotime('-30 minutes', strtotime($otw->start)));
+                $time=date("H:i", strtotime($otw->start));
             }
         }
         $rozp=$start;
@@ -94,7 +96,6 @@ class zapisy extends Controller
                     $z++;
                 }
             }
-
             if(count($tables_rand) > 0)
             {
                 $godziny[$p][0]=$start;
@@ -106,18 +107,40 @@ class zapisy extends Controller
             $z=0;
         }
 
+        session(['date' => $date]);
+        session(['time' => $time]);
+        session(['persons' => $persons]);
+        return $godziny;
+    }
+
+    //funkcja sprawdzająca dostepne godziny
+    public function check(Request $data)
+    {
+        $round=30*60;
+        $time=date("H:i", round(strtotime($data->time)/$round) * $round);
+        $godziny=$this->godziny($data->date, $time, $data->persons);
+
         if($godziny==null)
         {
-            $godziny[0]='brak';
+            $godziny=$this->godziny(date("Y-m-d",strtotime("+1 day", strtotime($data->date))), null, $data->persons);
+            $p=count($godziny);
+            $godziny[$p][0]='brak';
+            $godziny[$p][1]='brak';
         }
 
         session(['godziny' => $godziny]);
-        session(['date' => $data->date]);
-        session(['time' => $data->time]);
-        session(['persons' => $data->persons]);
         return redirect(route('rezerwacja'));
     }
 
+    //funkcja przekierowujaca do potwierdzenia
+    public function confirm(Request $data)
+    {
+        $butt=explode("; ", $data->save);
+        $date=date("Y-m-d", strtotime($butt[0]));
+        return view('confirm')->with('date', $date)->with('time', $butt[1])->with('persons', $butt[3]);
+    }
+
+    //funkcja zapisująca rezerwację do bazy
     public function save(request $data)
     {
         $butt=explode("; ", $data->save);
