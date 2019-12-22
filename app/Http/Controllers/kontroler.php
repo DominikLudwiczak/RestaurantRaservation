@@ -9,6 +9,7 @@ use App\menu;
 use App\User;
 use App\messages;
 use App\stoliki;
+use App\godz_otwarcia;
 
 class kontroler extends Controller
 {
@@ -24,6 +25,12 @@ class kontroler extends Controller
         $kat_id=manu_kat::where('kategoria', $kategoria)->first();
         $menu=menu::where('menu_kat_id', $kat_id->id)->get();
         return view('menu')->with('kat', $kat)->with('kategoria', $kategoria)->with('menu', $menu);
+    }
+
+    public function kontakt()
+    {
+        $otwarcie=godz_otwarcia::all();
+        return view('kontakt')->with('otwarcie', $otwarcie);
     }
 
     public function message(Request $data)

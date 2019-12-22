@@ -40,18 +40,12 @@
                     <span style='font-size:1.5em; color:#818181;'>Godziny otwarcia</span>
                     <table class='striped'>
                         <tbody>
-                            <tr>
-                                <th class='center-align'>PN-PT</th>
-                                <th class='center-align'>12:00-22:00</th>
-                            </tr>
-                            <tr>
-                                <th class='center-align'>SOB</th>
-                                <th class='center-align'>12:00-23:00</th>
-                            </tr>
-                            <tr>
-                                <th class='center-align'>ND</th>
-                                <th class='center-align'>12:00-21:30</th>
-                            </tr>
+                            @foreach($otwarcie as $row)
+                                <tr>
+                                    <th class='center-align'>{{$row->day}}</th>
+                                    <th class='center-align'>{{date("H:i",strtotime($row->start))}}-{{date("H:i", strtotime($row->end))}}</th>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
                 </div>

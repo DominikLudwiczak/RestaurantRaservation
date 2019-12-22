@@ -28,7 +28,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <!-- jquery -->
-    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> 
 
     <style type='text/css'>
         /* Inactive/Active Default input field color */
@@ -84,6 +84,25 @@
                 color: #26a69a;
             }
 
+            .tabs .tab a {
+                color: #B69181;
+            }
+            .tabs .tab a.active {
+                color: #B69181;
+            }
+            .tabs .tab a:hover {
+                color: #947364;
+            }
+            .tabs .tab a:focus {
+                background-color: rgba(188, 153, 139, 0.2);
+            }
+            .tabs .tab a:focus.active {
+                background-color: rgba(188, 153, 139, 0.2);
+            }
+            .tabs .indicator {
+                background-color: #BC998B;
+            }
+
             body
             {
                 display: flex;
@@ -98,9 +117,7 @@
             }
 
             .picker__date-display { background-color: #6d4e7a; }
-
     </style>
-            
 </head>
 <body>
     <nav style='background-color:#4a4949;'>
@@ -123,6 +140,9 @@
                                     {{ __('Wyloguj się') }}
                                 </a>
                             </li>
+                            <li>
+                                <a href="{{ route('home') }}" style='color:white; background-color:#646464;'>Konto</a>
+                            </li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
@@ -132,29 +152,32 @@
                 </ul>
                     <!-- sidenav -->
                     <ul class='sidenav center-align' id='mobile-demo'>
+                        <!-- dropdown -->
+                        @if(\Request::is('menu/*'))
+                            <li><a href="">Menu</a></li>
+                        @else
+                            <li><a href="{{ route('menu') }}">Menu</a></li>
+                        @endif
+                        <li><a href="{{ route('onas') }}">O Nas</a></li>
+                        <li><a href="{{ route('kontakt') }}">Kontakt</a></li>
+                        <li><a href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
+                        <li><a href="{{ route('faq') }}">FAQ</a></li>
+                        <li><div class='divider'></div></li>
                         @guest
-                            @if(\Request::is('menu/*'))
-                                <li><a href="">Menu</a></li>
-                            @else
-                                <li><a href="{{ route('menu') }}">Menu</a></li>
-                            @endif
-                            <li><a href="{{ route('onas') }}">O Nas</a></li>
-                            <li><a href="{{ route('kontakt') }}">Kontakt</a></li>
-                            <li><a href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
-                            <li><a href="{{ route('faq') }}">FAQ</a></li>
-                            <li><div class='divider'></div></li>
                             <li><a href="{{ route('login') }}">Zaloguj się</a></li>
                             @if (Route::has('register'))
                                 <li><a href="{{ route('register') }}">Rejestracja</a></li>
                             @endif
                         @else
-                             <!-- dropdown -->
-                             <ul id="dropdown2" class='dropdown-content'>
+                            <ul id="dropdown2" class='dropdown-content'>
                                 <li>
                                     <a href="{{ route('logout') }}"onclick="event.preventDefault();
                                         document.getElementById('logout-form').submit();">
                                         {{ __('Wyloguj się') }}
                                     </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('home') }}">Konto</a>
                                 </li>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
@@ -263,19 +286,22 @@
             $('.timepicker').timepicker({
                 defaultTime: 'now',
                 twelveHour: false,
-                disable:[
-                    {from: [19,0], to: [8,0]}
-                ]
             });
             $('.carousel.carousel-slider').carousel({
-                fullWidth: true,
+                fullWidth: true
             });
             $('.carousel').carousel({});
 
             setInterval(function(){
                     $('.carousel.carousel-slider').carousel('next');
-                }, 10000);
+                }, 6000);
             });
+            M.Tabs.init(document.querySelector('.tabs'));
+            $(document).ready(function(){
+            // TABS
+            $('ul.tabs').tabs();
+            });
+            $('.materialboxed').materialbox();
     </script>
 </body>
 </html>

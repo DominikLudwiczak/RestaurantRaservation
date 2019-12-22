@@ -24,9 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/FAQ', 'kontroler@faq')->name('faq');
 
-Route::get('/kontakt', function(){
-    return view('kontakt');
-})->name('kontakt');
+Route::get('/kontakt', 'kontroler@kontakt')->name('kontakt');
 
 Route::get('/onas', function(){
     return view('onas');

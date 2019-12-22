@@ -51,7 +51,7 @@
                         @endif
                         <div class="card horizontal">
                             <div class="card-image">
-                                <img src="photos/stolik-1.jpg">
+                                <img src="photos/desktop/foto-6.jpg">
                             </div>
                             <div class="card-stacked">
                                 <div class="card-content">

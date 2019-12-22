@@ -116,6 +116,15 @@ class zapisy extends Controller
     //funkcja sprawdzająca dostepne godziny
     public function check(Request $data)
     {
+        if(strtotime($data->date) < strtotime(date("Y-m-d")))
+        { 
+            return redirect(route('rezerwacja'))->with('error', 'Możesz zarezerwować stolik tylko w przyszłości');
+        }
+
+        if(strtotime($data->date) > strtotime(date("Y-m-d", strtotime('+2 months'))))
+        {
+            return redirect(route('rezerwacja'))->with('error', 'Możesz zarezerwować stolik maksymalnie 2 miesiące do przodu');
+        }
         $round=30*60;
         $time=date("H:i", round(strtotime($data->time)/$round) * $round);
         $godziny=$this->godziny($data->date, $time, $data->persons);
@@ -135,36 +144,38 @@ class zapisy extends Controller
     //funkcja przekierowujaca do potwierdzenia
     public function confirm(Request $data)
     {
+        if(Auth::guest())
+        {
+            return redirect('login');
+        }
         $butt=explode("; ", $data->save);
         $date=date("Y-m-d", strtotime($butt[0]));
-        return view('confirm')->with('date', $date)->with('time', $butt[1])->with('persons', $butt[3]);
+        return view('confirm')->with('butt', $butt)->with('date', $date);
     }
 
     //funkcja zapisująca rezerwację do bazy
     public function save(request $data)
     {
-        $butt=explode("; ", $data->save);
         if(Auth::guest())
         {
             return redirect('login');
         }
         else
         {
-            $date=date("Y-m-d", strtotime($butt[0]));
+            $butt=explode("; ", $data->save);
             $dane=[
                 'user_ID' => Auth::user()->id,
                 'table_ID' => $butt[2],
                 'persons' => $butt[3],
-                'date' => $date,
+                'date' => session('date'),
                 'time' => $butt[1]
             ];
             $save=rezerwacje::create($dane);
             $dane=null;
-            unset(session('godziny')[0]);
-            unset(session('godziny')[1]);
-            unset(session('date')[0]);
-            unset(session('time')[0]);
-            unset(session('persons')[0]);
+            session(['godziny' => ""]);
+            session(['date' => ""]);
+            session(['time' => ""]);
+            session(['persons' => ""]);
             return redirect(route('rezerwacja'))->with('success', 'zarezerwowano stolik!');
         }
     }
