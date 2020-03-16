@@ -3,14 +3,14 @@
 @section('content')
     <div class='container center-align'>
         <span style='font-size: 2.5em;'>Menu</span><br/>
-        <nav class="nav-extended" style="font-family: 'Poiret One', cursive; background-color:#8A6F63;">
+        <nav class="nav-extended" style="font-family: 'Poiret One', cursive; background-color:#8A6F63; font-size:1.5rem;">
             <div class="nav-content">
                 <ul class="tabs tabs-transparent">
                     @foreach($kat as $row)
                         @if(\Request::is("menu/$row->kategoria"))
-                            <?php echo "<li class='tab'><a class='active' href='$row->kategoria'>$row->kategoria</a></li>";?>
+                            <li class='tab'><a class='active' href="{{$row->kategoria}}" target="_self">{{$row->kategoria}}</a></li>
                         @else
-                            <?php echo "<li class='tab'><a href='$row->kategoria'>$row->kategoria</a></li>";?>
+                            <li class='tab'><a href="{{$row->kategoria}}" target="_self">{{$row->kategoria}}</a></li>
                         @endif
                     @endforeach
                 </ul>

@@ -35,7 +35,7 @@ Route::get('/menu', function(){
     return redirect("menu/$kat->kategoria");
 })->name('menu');
 
-Route::get('/menu/{kat}', 'kontroler@menu');
+Route::get('/menu/{kategoria}', 'kontroler@menu');
 
 Route::get('/rezerwacja', 'kontroler@rezerwacja')->name('rezerwacja');
 

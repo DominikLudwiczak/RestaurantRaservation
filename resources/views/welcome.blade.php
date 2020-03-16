@@ -9,17 +9,27 @@
             <a href="{{ route('rezerwacja') }}" style='color:white; padding:1em;'>Zarezerwuj stolik</a>/
             <a href="{{ route('faq') }}" style='color:white; padding:1em;'>FAQ</a>
         </div>
-        <a class='carousel-item'><img src='/photos/desktop/foto-1.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/desktop/foto-2.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/desktop/foto-3.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/desktop/foto-4.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/desktop/foto-5.jpg' style='height:100%;'/></a>
+        <?php
+            $dir_desktop = "./photos/desktop/";
+            $files_desktop = scandir($dir_desktop);
+            $dir_mob = "./photos/mobile/";
+            $files_mob = scandir($dir_mob);
+            unset($files_desktop[0]);
+            unset($files_desktop[1]);
+            $files_desktop=array_values($files_desktop);
+            unset($files_mob[0]);
+            unset($files_mob[1]);
+            $files_mob=array_values($files_mob);
+        ?>
+
+        @for($i=0; $i < count($files_desktop); $i++)
+            <a class='carousel-item'><img src="{{$dir_desktop}}{{$files_desktop[$i]}}" style='height:100%;'/></a>
+        @endfor
     </div>
 
     <div class="carousel carousel-slider hide-on-med-and-up" style='margin:0; height:95vh;'>
-        <a class='carousel-item'><img src='/photos/mobile/mob-1.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/mobile/mob-2.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/mobile/mob-3.jpg' style='height:100%;'/></a>
-        <a class='carousel-item'><img src='/photos/mobile/mob-4.jpg' style='height:100%;'/></a>
+        @for($i=0; $i < count($files_mob); $i++)
+            <a class='carousel-item'><img src="{{$dir_mob}}{{$files_mob[$i]}}" style='height:100%;'/></a>
+        @endfor
     </div>
 @endsection

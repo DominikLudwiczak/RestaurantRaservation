@@ -28,12 +28,11 @@
                 </div>
                 <form method='post' action=" {{ route('rezerwacja_save') }}" name='form'>
                     @csrf  
+                    <div class='row'>
+                        <a href='/rezerwacja'><button type='submit' class='btn' style='background-color: #A8735C;'>Wróć</button></a>
+                        <button typ='submit' class='btn' name='save' value="{{$date}}; {{$butt[1]}}; {{$butt[2]}}; {{session('persons')}}" style="background-color:#A8735C;">Zatwierdź</button>
+                    </div>
                 </form>
-                <div class='row'>
-                    <a href='/rezerwacja'><button type='submit' class='btn' style='background-color: #A8735C;'>Wróć</button></a>
-                    <button typ='submit' class='btn' name='save' form='form' value="{{$date}}; {{$butt[1]}}; {{$butt[2]}}; {{session('persons')}}" style="background-color:#A8735C;">Zatwierdź</button>
-                    
-                </div>
             </div>
         </div>
     </div>

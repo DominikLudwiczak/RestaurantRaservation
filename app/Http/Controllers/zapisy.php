@@ -118,12 +118,12 @@ class zapisy extends Controller
     {
         if(strtotime($data->date) < strtotime(date("Y-m-d")))
         { 
-            return redirect(route('rezerwacja'))->with('error', 'Możesz zarezerwować stolik tylko w przyszłości');
+            return redirect(route('rezerwacja'))->with('failed', 'Możesz zarezerwować stolik tylko w przyszłości');
         }
 
         if(strtotime($data->date) > strtotime(date("Y-m-d", strtotime('+2 months'))))
         {
-            return redirect(route('rezerwacja'))->with('error', 'Możesz zarezerwować stolik maksymalnie 2 miesiące do przodu');
+            return redirect(route('rezerwacja'))->with('failed', 'Możesz zarezerwować stolik maksymalnie 2 miesiące do przodu');
         }
         $round=30*60;
         $time=date("H:i", round(strtotime($data->time)/$round) * $round);

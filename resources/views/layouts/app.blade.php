@@ -31,7 +31,7 @@
     <script src="https://code.jquery.com/jquery-2.2.4.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script> 
 
     <style type='text/css'>
-        /* Inactive/Active Default input field color */
+            /* Inactive/Active Default input field color */
             .input-field input[type]:not([readonly]),
             .input-field input[type]:focus:not([readonly]),
             .input-field textarea:not([readonly]),
@@ -122,72 +122,70 @@
 <body>
     <nav style='background-color:#4a4949;'>
         <div class="nav-wrapper">
-            <div class='container'>
-                <a href="{{ url('/') }}" class='brand-logo'>{{ config('app.name', 'Laravel') }}</a>
-                
-                <ul class="right hide-on-med-and-down">
+            <a href="{{ url('/') }}" class='brand-logo'><img src="/photos/logo.svg" height='50' width='50' style="margin-left:0.5rem; margin-top:0.3rem;"></a>
+            
+            <ul class="right hide-on-med-and-down">
+                @guest
+                    <li><a href="{{ route('login') }}">Zaloguj się</a></li>
+                    @if (Route::has('register'))
+                        <li><a href="{{ route('register') }}">Rejestracja</a></li>
+                    @endif
+                @else
+                        <!-- dropdown -->
+                    <ul id="dropdown1" class='dropdown-content'>
+                        <li>
+                            <a href="{{ route('home') }}" style='color:white; background-color:#646464;'>Konto</a>
+                        </li>
+                        <li>
+                            <a href="{{ route('logout') }}" style='color:white; background-color:#646464;' onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                {{ __('Wyloguj się') }}
+                            </a>
+                        </li>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </ul>
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                @endguest
+            </ul>
+                <!-- sidenav -->
+                <ul class='sidenav center-align' id='mobile-demo'>
+                    <!-- dropdown -->
+                    @if(\Request::is('menu/*'))
+                        <li><a href="">Menu</a></li>
+                    @else
+                        <li><a href="{{ route('menu') }}">Menu</a></li>
+                    @endif
+                    <li><a href="{{ route('onas') }}">O Nas</a></li>
+                    <li><a href="{{ route('kontakt') }}">Kontakt</a></li>
+                    <li><a href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
+                    <li><a href="{{ route('faq') }}">FAQ</a></li>
+                    <li><div class='divider'></div></li>
                     @guest
                         <li><a href="{{ route('login') }}">Zaloguj się</a></li>
                         @if (Route::has('register'))
                             <li><a href="{{ route('register') }}">Rejestracja</a></li>
                         @endif
                     @else
-                         <!-- dropdown -->
-                        <ul id="dropdown1" class='dropdown-content'>
+                        <ul id="dropdown2" class='dropdown-content'>
                             <li>
-                                <a href="{{ route('logout') }}" style='color:white; background-color:#646464;' onclick="event.preventDefault();
+                                <a href="{{ route('logout') }}"onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
                                     {{ __('Wyloguj się') }}
                                 </a>
                             </li>
                             <li>
-                                <a href="{{ route('home') }}" style='color:white; background-color:#646464;'>Konto</a>
+                                <a href="{{ route('home') }}">Konto</a>
                             </li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 @csrf
                             </form>
                         </ul>
-                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
+                        <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
                     @endguest
                 </ul>
-                    <!-- sidenav -->
-                    <ul class='sidenav center-align' id='mobile-demo'>
-                        <!-- dropdown -->
-                        @if(\Request::is('menu/*'))
-                            <li><a href="">Menu</a></li>
-                        @else
-                            <li><a href="{{ route('menu') }}">Menu</a></li>
-                        @endif
-                        <li><a href="{{ route('onas') }}">O Nas</a></li>
-                        <li><a href="{{ route('kontakt') }}">Kontakt</a></li>
-                        <li><a href="{{ route('rezerwacja') }}">Zarezerwuj stolik</a></li>
-                        <li><a href="{{ route('faq') }}">FAQ</a></li>
-                        <li><div class='divider'></div></li>
-                        @guest
-                            <li><a href="{{ route('login') }}">Zaloguj się</a></li>
-                            @if (Route::has('register'))
-                                <li><a href="{{ route('register') }}">Rejestracja</a></li>
-                            @endif
-                        @else
-                            <ul id="dropdown2" class='dropdown-content'>
-                                <li>
-                                    <a href="{{ route('logout') }}"onclick="event.preventDefault();
-                                        document.getElementById('logout-form').submit();">
-                                        {{ __('Wyloguj się') }}
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('home') }}">Konto</a>
-                                </li>
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                    @csrf
-                                </form>
-                            </ul>
-                            <li><a class="dropdown-trigger" href="#!" data-target="dropdown2">{{ Auth::user()->name }}<i class="material-icons right">arrow_drop_down</i></a></li>
-                        @endguest
-                    </ul>
-                    <a href='#' data-target='mobile-demo' class='sidenav-trigger'><i class='material-icons'>menu</i></a>
-            </div>
+                <a href='#' data-target='mobile-demo' class='sidenav-trigger'><i class='material-icons'>menu</i></a>
         </div>
     </nav>
 
@@ -264,25 +262,29 @@
     </footer>
     <div class="footer-copyright" style='background-color:#1f1f1f; color:grey;'>
         <div class="container center-align" style='margin-bottom:0.5em;'>
-            <div class='row' style='margin-top:1em; margin-bottom:0;'>
-                <a href='#!'><i class='small material-icons white-text'>stars</i></a>
-                <a href='#!'><i class='small material-icons white-text'>https</i></a>
-                <a href='#!'><i class='small material-icons white-text'>account_circle</i></a>
-            </div>
-            © 2019 Copyright Text
+            © 2019 Copyright Text<br/>
+            korzystanie z naszego serwisu oznacza akceptację regulaminu
         </div>
     </div>
 
-    <script type='text/javascript' src='public/js/materialize.min.js'></script>
+    <script type='text/javascript' src='/public/js/materialize.min.js'></script>
     <script>
         $(document).ready(function()
         {
             $('.dropdown-trigger').dropdown();
             $('.collapsible').collapsible();
             $('textarea#textarea1').characterCounter();
-            $('.sidenav').sidenav();
+            $('.sidenav').sidenav({
+                dragable: true,
+            });
             $('select').formSelect();
-            $('.datepicker').datepicker();
+            var dzisiaj = new Date();
+            var maxiDate = new Date();
+            maxiDate.setMonth(dzisiaj.getMonth()+2);
+            $('.datepicker').datepicker({
+                minDate: dzisiaj,
+                maxDate: maxiDate,
+            });
             $('.timepicker').timepicker({
                 defaultTime: 'now',
                 twelveHour: false,
@@ -298,8 +300,8 @@
             });
             M.Tabs.init(document.querySelector('.tabs'));
             $(document).ready(function(){
-            // TABS
-            $('ul.tabs').tabs();
+                // TABS
+                $('ul.tabs').tabs();
             });
             $('.materialboxed').materialbox();
     </script>

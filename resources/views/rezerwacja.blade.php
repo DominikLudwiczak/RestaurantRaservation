@@ -50,7 +50,7 @@
                             <h5>Dostępne godziny rezerwacji w wybranym dniu</h5>
                         @endif
                         <div class="card horizontal">
-                            <div class="card-image">
+                            <div class="card-image hide-on-small-only">
                                 <img src="photos/desktop/foto-6.jpg">
                             </div>
                             <div class="card-stacked">
@@ -67,19 +67,31 @@
                 </form>
             @endif
     </div>
-    <?php 
-        $year=date('Y', strtotime(session('date')));
+    <?php
         $month=date('m', strtotime('-1 month',strtotime(session('date')))); 
         $day=date('d', strtotime(session('date'))); 
+        if($month == date('m', strtotime('-1 month', date('m'))))
+        {
+            $year=date('Y', strtotime('-1 year', strtotime(session('date'))));
+        }
+        else 
+        {
+            $year=date('Y', strtotime(session('date')));
+        }
     ?>
 
     <script>
         if(<?php echo session('date')!=null?>)
         {
             document.addEventListener('DOMContentLoaded', function () {
+                var dzisiaj = new Date();
+                var maxiDate = new Date();
+                maxiDate.setMonth(dzisiaj.getMonth()+2);
                 var options = {
                     defaultDate: new Date(<?php echo $year.", ".$month.", ".$day ?>),
-                    setDefaultDate: true
+                    setDefaultDate: true,
+                    minDate: dzisiaj,
+                    maxDate: maxiDate,
                 };
                 var elems = document.querySelector('.datepicker');
                 var instance = M.Datepicker.init(elems, options);
